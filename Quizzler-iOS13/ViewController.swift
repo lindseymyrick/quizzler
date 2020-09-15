@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     
     var questionNumber = 0;
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -45,13 +46,13 @@ class ViewController: UIViewController {
 
     @IBAction func answerButtonPressed(_ sender: UIButton) {
         let userAnswer = sender.currentTitle //True, False
-        let actualQuestion = quiz[questionNumber].text
+//        let actualQuestion = quiz[questionNumber].text
         let actualAnswer = quiz[questionNumber].answer
         
         if userAnswer == actualAnswer {
-            print("Correct!")
+            sender.backgroundColor = UIColor.green
         } else {
-            print("False")
+            sender.backgroundColor = UIColor.red
         }
         
         if questionNumber + 1 < quiz.count {
@@ -66,7 +67,23 @@ class ViewController: UIViewController {
     }
     
     func updateUI(){
-        questionLabel.text = quiz[questionNumber].text
+        let timer = Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { (timer) in
+            self.questionLabel.text = self.quiz[self.questionNumber].text
+            self.trueButton.backgroundColor = UIColor.clear
+            self.falseButton.backgroundColor = UIColor.clear
+            var quizProgress = Float(self.questionNumber + 1) / Float(self.quiz.count)
+            print("quizProgress", quizProgress)
+            self.progressBar.progress = quizProgress
+        }
+//        questionLabel.text = quiz[questionNumber].text
+//        trueButton.backgroundColor = UIColor.clear
+//        falseButton.backgroundColor = UIColor.clear
     }
 }
+
+//let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { (timer) in
+//    questionLabel.text = quiz[questionNumber].text
+//    trueButton.backgroundColor = UIColor.clear
+//    falseButton.backgroundColor = UIColor.clear
+//}
 
